@@ -19,4 +19,14 @@ defmodule StatistiqsTest do
   test "median returns an accurate measure" do
     assert Statistiqs.median(@data) == 500.0
   end
+
+  test "mode return 0 for an empty list" do
+    assert Statistiqs.mode([]) == nil
+  end
+
+  test "mode returns accurate measures for two modes" do
+    sorted = Enum.sort(@data)
+    assert Statistiqs.head_tail_head_comparison(sorted) == [100, 500]
+  end
+
 end
