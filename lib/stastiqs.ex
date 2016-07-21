@@ -19,13 +19,15 @@ defmodule Statistiqs do
   # -----------------------
 
   def median([]), do: 0
-  # Cribbed from honeybadger-elixir
-  # TODO: This is wrong. It assumes that the list has an event length.
   def median(list) do
-    midpoint = Enum.count(list) |> div(2)
-    list
-    |> Enum.sort
-    |> Enum.at(midpoint)
+    if rem(Enum.count(list), 2) == 0 do
+      # TODO
+    else
+      midpoint = Enum.count(list) |> div(2)
+      list
+      |> Enum.sort
+      |> Enum.at(midpoint)
+    end
   end
 
   # -----------------------

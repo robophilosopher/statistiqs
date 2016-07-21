@@ -17,8 +17,14 @@ defmodule StatistiqsTest do
     assert Statistiqs.median([]) == 0
   end
 
-  test "median returns an accurate measure" do
-    assert Statistiqs.median(@data) == 500.0
+  test "median returns an accurate measure for an odd length list" do
+    data = [1,2,3,4,5]
+    assert Statistiqs.median(data) == 3
+  end
+
+  test "median returns an accurate measure for an even length list" do
+    data = [1,2,3,4,5,6]
+    assert Statistiqs.median(data) == 3.5
   end
 
   test "mode return 0 for an empty list" do
