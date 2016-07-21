@@ -29,7 +29,12 @@ defmodule StatistiqsTest do
     assert Statistiqs.frequency_table(@data) == @frequency_table
   end
 
-  test "modes returns accurate measure" do
+  test "modes returns accurate measures when there is more than one mode in a list" do
     assert Statistiqs.mode(@data) == [100, 500]
+  end
+
+  test "mode retuns accurate measure when there is only one mode in a list" do
+    data = @data -- [500]
+    assert Statistiqs.mode(data) == [100]
   end
 end
