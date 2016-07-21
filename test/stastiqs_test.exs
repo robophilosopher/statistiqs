@@ -3,6 +3,7 @@ defmodule StatistiqsTest do
   doctest Statistiqs
 
   @data [100, 60, 70, 900, 100, 200, 500, 500, 503, 600, 1000, 1200]
+  @frequency_table %{60 => 1, 70 => 1, 100 => 2, 200 => 1, 500 => 2, 503 => 1, 600 => 1, 900 => 1, 1000 => 1, 1200 => 1}
 
   test "mean returns 0 for an empty list" do
     assert Statistiqs.mean([]) == 0
@@ -24,9 +25,11 @@ defmodule StatistiqsTest do
     assert Statistiqs.mode([]) == nil
   end
 
-  test "mode returns accurate measures for two modes" do
-    sorted = Enum.sort(@data)
-    assert Statistiqs.head_tail_head_comparison(sorted) == [100, 500]
+  test "frequency_table returns accurate frequency table" do
+    assert Statistiqs.frequency_table(@data) == @frequency_table
   end
 
+  test "modes returns accurate measure" do
+    assert Statistiqs.mode(@data) == [100, 500]
+  end
 end

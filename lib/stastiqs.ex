@@ -1,8 +1,22 @@
 defmodule Statistiqs do
 
+  # -----------------------
+  # Sum
+  # -----------------------
+
+  def sum_list([]), do: nil
   def sum_list(list), do: Enum.reduce(list, 0, &(&1 + &2))
+
+  # -----------------------
+  # Mean
+  # -----------------------
+
   def mean([]), do: 0
   def mean(list), do: sum_list(list)/length(list)
+
+  # -----------------------
+  # Median
+  # -----------------------
 
   def median([]), do: 0
   def median(list) do
@@ -12,42 +26,58 @@ defmodule Statistiqs do
     |> Enum.at(midpoint)
   end
 
-  def mode([]), do: nil
+  # -----------------------
+  # Frequency Table
+  # -----------------------
 
-  # Finds repeating values, but does not yet find the modes
-  # def mode(list) do
-  #   list
-  #   |> Enum.sort
-  #   |> Statistiqs.head_tail_head_comparison
-  # end
-
-  # TODO: make this private
-  def head_tail_head_comparison(list) do
-    head_tail_head_comparison([], list)
+  def frequency_table(%{}), do: nil
+  def frequency_table(list) do
+    frequency_table(%{}, list)
   end
 
-  defp head_tail_head_comparison(collection, []) do
-    Enum.sort(collection)
+  defp frequency_table(map, []) do
+    map
   end
 
-  defp head_tail_head_comparison(collection, list) do
+  defp frequency_table(map, list) do
     [head | tail] = list
-    tail_head = tail_head(tail)
 
-    if head == tail_head do
-      Enum.into(collection, [head])
-      |> head_tail_head_comparison(tail)
+    if Map.has_key?(map, head) do
+      %{ map | head => map[head] + 1}
+      |> frequency_table(tail)
     else
-      head_tail_head_comparison(collection, tail)
+      Map.merge(map, %{ head => 1 })
+      |> frequency_table(tail)
     end
   end
 
-  defp tail_head([head|_]) do
-    head
+  # -----------------------
+  # Mode
+  # -----------------------
+
+  def mode([]), do: nil
+  def mode(data) do
+    frequency_table = frequency_table(data)
+
+    max = frequency_table
+      |> Map.values
+      |> Enum.sort
+      |> List.last
+
+    mode(max, frequency_table)
   end
 
-  defp tail_head([]) do
-    nil
+  defp mode(max, frequency_table) when is_map(frequency_table) do
+    Enum.map(frequency_table, fn(e) -> mode(e, max) end)
+    |> Enum.filter(fn(n) -> n end)
   end
 
+  defp mode(tuple, max) when is_tuple(tuple) do
+    list = Tuple.to_list(tuple)
+    [first | last] = list
+
+    if last == [max] do
+      first
+    end
+  end
 end
