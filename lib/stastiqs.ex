@@ -20,10 +20,14 @@ defmodule Statistiqs do
 
   def median([]), do: 0
   def median(list) do
-    if rem(Enum.count(list), 2) == 0 do
-      # TODO
+    list_length = Enum.count(list)
+    midpoint = Enum.count(list) |> div(2)
+
+    if rem(list_length, 2) == 0 do
+      mid1 = Enum.at(list, midpoint - 1)
+      mid2 = Enum.at(list, midpoint)
+      (mid1 + mid2) / 2
     else
-      midpoint = Enum.count(list) |> div(2)
       list
       |> Enum.sort
       |> Enum.at(midpoint)
