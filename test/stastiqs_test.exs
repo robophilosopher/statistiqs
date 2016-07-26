@@ -53,4 +53,10 @@ defmodule StatistiqsTest do
     data = [100, 60, 70, 900, 100, 200, 500, 500, 503, 600, 1000, 1200]
     assert Statistiqs.variance(data) == 141047.35416666666
   end
+
+  test "standard_deviation returns correct result" do
+    data = [100, 60, 70, 900, 100, 200, 500, 500, 503, 600, 1000, 1200]
+    assert Statistiqs.standard_deviation(data) == 375.5627166887931
+  end
+
 end

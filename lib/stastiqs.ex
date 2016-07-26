@@ -89,9 +89,13 @@ defmodule Statistiqs do
     end
   end
 
-  # -----------------------
+  # ---------------------------------------------------------------------
+  # Dispersion Measures
+  # ---------------------------------------------------------------------
+
+  # ----------------------------------------------
   # Find Range
-  # -----------------------
+  # ----------------------------------------------
 
   def find_range([]), do: nil
   def find_range(list) do
@@ -100,9 +104,9 @@ defmodule Statistiqs do
     {min, max, max - min}
   end
 
-  # -----------------------
-  # Variance
-  # -----------------------
+  # ----------------------------------------------
+  # Variance (borrowed from honeybadger-elixir)
+  # ----------------------------------------------
 
   def variance([]), do: nil
   def variance(list) do
@@ -113,4 +117,13 @@ defmodule Statistiqs do
     ss / Enum.count(list)
   end
 
+  # ----------------------------------------------
+  # Standard Deviation
+  # ----------------------------------------------
+
+  def standard_deviation([]), do: 0
+  def standard_deviation(list) do
+    variance(list)
+    |> :math.sqrt
+  end
 end
