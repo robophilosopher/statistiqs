@@ -6,7 +6,7 @@ defmodule StatistiqsTest do
   @frequency_table %{60 => 1, 70 => 1, 100 => 2, 200 => 1, 500 => 2, 503 => 1, 600 => 1, 900 => 1, 1000 => 1, 1200 => 1}
 
   test "mean returns 0 for an empty list" do
-    assert Statistiqs.mean([]) == 0
+    assert Statistiqs.mean([]) == nil
   end
 
   test "mean returns an accurate measure" do
@@ -14,7 +14,7 @@ defmodule StatistiqsTest do
   end
 
   test "median returns 0 for an empty list" do
-    assert Statistiqs.median([]) == 0
+    assert Statistiqs.median([]) == nil
   end
 
   test "median returns an accurate measure for an odd length list" do
@@ -42,5 +42,15 @@ defmodule StatistiqsTest do
   test "mode returns accurate measure when there is only one mode in a list" do
     data = @data -- [500]
     assert Statistiqs.mode(data) == [100]
+  end
+
+  test "find_range returns lowest, highest, and range" do
+    data = [100, 60, 70, 900, 100, 200, 500, 500, 503, 600, 1000, 1200]
+    assert Statistiqs.find_range(data) == {60,1200, 1140}
+  end
+
+  test "variance returns correct result" do
+    data = [100, 60, 70, 900, 100, 200, 500, 500, 503, 600, 1000, 1200]
+    assert Statistiqs.variance(data) == 141047.35416666666
   end
 end

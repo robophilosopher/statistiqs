@@ -11,14 +11,14 @@ defmodule Statistiqs do
   # Mean
   # -----------------------
 
-  def mean([]), do: 0
+  def mean([]), do: nil
   def mean(list), do: sum_list(list)/length(list)
 
   # -----------------------
   # Median
   # -----------------------
 
-  def median([]), do: 0
+  def median([]), do: nil
   def median(list) do
     list_length = Enum.count(list)
     midpoint = Enum.count(list) |> div(2)
@@ -88,4 +88,29 @@ defmodule Statistiqs do
       first
     end
   end
+
+  # -----------------------
+  # Find Range
+  # -----------------------
+
+  def find_range([]), do: nil
+  def find_range(list) do
+    max = Enum.max(list)
+    min = Enum.min(list)
+    {min, max, max - min}
+  end
+
+  # -----------------------
+  # Variance
+  # -----------------------
+
+  def variance([]), do: nil
+  def variance(list) do
+    ss = Enum.reduce(list, 0.0, fn(x, sum) ->
+      diff = x - mean(list)
+      sum + (diff * diff)
+    end)
+    ss / Enum.count(list)
+  end
+
 end
