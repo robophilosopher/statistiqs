@@ -110,10 +110,7 @@ defmodule Statistiqs do
 
   def variance([]), do: nil
   def variance(list) do
-    ss = Enum.reduce(list, 0.0, fn(x, sum) ->
-      diff = x - mean(list)
-      sum + (diff * diff)
-    end)
+    ss = sum_of_squares(list)
     ss / Enum.count(list)
   end
 
@@ -125,5 +122,67 @@ defmodule Statistiqs do
   def standard_deviation(list) do
     variance(list)
     |> :math.sqrt
+  end
+
+  # ----------------------------------------------
+  # Sum of Squares
+  # ----------------------------------------------
+
+  def sum_of_squares([]), do: 0
+  def sum_of_squares(list) do
+    Enum.reduce(list, 0.0, fn(x, sum) ->
+      diff = x - mean(list)
+      sum + (diff * diff)
+    end)
+  end
+
+  # ---------------------------------------------------------------------
+  # Correlation
+  # ---------------------------------------------------------------------
+
+  # ----------------------------------------------
+  # Pearson Correlation
+  # ----------------------------------------------
+
+  def pearson_correlation([], []), do: 0
+  def pearson_correlation(x, y) do
+    ssx = sum_of_squares(x)
+    ssy = sum_of_squares(y)
+
+    sigma_x = Enum.reduce(x, fn(x, sum) -> (sum + x) end)
+    sigma_y = Enum.reduce(y, fn(y, sum) -> (sum + y) end)
+
+    xy = sum_lists(x, y)
+    sigma_xy = Enum.reduce(xy, fn(xy, sum) -> (sum + xy) end)
+
+    inter = (sigma_x * sigma_y)/Enum.count(x)
+    ss_xy = (sigma_xy - inter)
+
+
+    ss_xy / :math.sqrt(ssx * ssy)
+    |> Float.round(2)
+  end
+
+  # ----------------------------------------------
+  # Sum Lists
+  # ----------------------------------------------
+
+  def sum_lists(list), do: list
+
+  def sum_lists(x, y) do
+    list = []
+    sum_lists(x, y, list)
+  end
+
+  def sum_lists(x, y, list) do
+    if Enum.count(x) > 0 do
+      [x_head|x_tail] = x
+      [y_head|y_tail] = y
+
+      new_list = list ++ [x_head * y_head]
+      sum_lists(x_tail, y_tail, new_list)
+    else
+      sum_lists(list)
+    end
   end
 end

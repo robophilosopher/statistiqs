@@ -59,4 +59,9 @@ defmodule StatistiqsTest do
     assert Statistiqs.standard_deviation(data) == 375.5627166887931
   end
 
+  test "pearson_correlation returns correct result" do
+    x = [490, 500, 530, 550, 580, 590, 600, 600, 650, 700]
+    y = [560, 500, 510, 600, 600, 620, 550, 630, 650, 750]
+    assert Statistiqs.pearson_correlation(x, y) == 0.87
+  end
 end
