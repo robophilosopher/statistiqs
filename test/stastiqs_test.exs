@@ -64,4 +64,14 @@ defmodule StatistiqsTest do
     y = [560, 500, 510, 600, 600, 620, 550, 630, 650, 750]
     assert Statistiqs.pearson_correlation(x, y) == 0.87
   end
+
+  test "sum_lists raises error for lists of unequal length" do
+    x = [490, 500]
+    y = [560]
+
+    assert_raise ArithmeticError, "Lists must be of the same length.", fn ->
+      Statistiqs.vector_add_lists(x, y)
+    end
+  end
+
 end
